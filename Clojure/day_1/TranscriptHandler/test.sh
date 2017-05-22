@@ -24,3 +24,9 @@ curl -X put -d "And the mome raths outgrabe." -H "Content-Type: text/plain" loca
 echo ""
 curl localhost:3000/session/$SID/translation/0
 echo ""
+
+
+echo ""
+#curl localhost:3000/session/9999/translation/0
+curl -sw '%{http_code}' localhost:3000/session/$SID/translation-safe/99
+echo ""
