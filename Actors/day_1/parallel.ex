@@ -17,6 +17,9 @@ defmodule Parallel do
 end
 
 # sample code
-# slow_double = fn(x) -> :timer.sleep(1000); x * 2 end
-# :timer.tc(fn() -> Enum.map([1,2,3,4], slow_double) end)
-# :timer.tc(fn() -> Parallel.map([1,2,3,4], slow_double) end)
+slow_double = fn(x) -> :timer.sleep(1000); x * 2 end
+normal = :timer.tc(fn() -> Enum.map([1,2,3,4], slow_double) end)
+parallel = :timer.tc(fn() -> Parallel.map([1,2,3,4], slow_double) end)
+
+IO.puts("normal : #{elem(normal, 0)}")
+IO.puts("parallel : #{elem(parallel, 0)}")
