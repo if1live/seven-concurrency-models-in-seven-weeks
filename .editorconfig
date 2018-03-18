@@ -9,3 +9,8 @@ indent_style = tab
 
 [*.java]
 indent_style = tab
+
+[*.clj]
+indent_style = space
+indent_size = 2
+

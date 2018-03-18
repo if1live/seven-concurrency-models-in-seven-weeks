@@ -1,0 +1,5 @@
+http://www.npr.org/rss/rss.php?id=1001
+http://www.npr.org/rss/rss.php?id=1006
+http://www.npr.org/rss/rss.php?id=1003
+http://www.npr.org/rss/rss.php?id=1012
+http://www.npr.org/rss/rss.php?id=1004
