@@ -16,16 +16,28 @@
 (defn go-add [x y]
   (<!! (nth (iterate #(go (inc (<! %))) (go x)) y)))
 
-;; Can only recur from tail position
-;; ?????
-;; (defn map-chan [f from]
-;;   (let [to (chan)]
-;;     (go-loop []
-;;       (when-let [x (<! from)]
-;;         (>! to (f x))
-;;         (recur))
-;;       (close! to))
-;;     to))
+(defn map-chan [f from]
+  (let [to (chan)]
+    (go-loop []
+      (when-let [x (<! from)]
+        (>! to (f x))
+        (recur))
+      (close! to))
+    to))
+
+(defn factor? [x y]
+  (zero? (mod y x)))
+
+(defn get-primes [limit]
+  (let [primes (chan)
+        numbers (to-chan (range 2 limit))]
+    (go-loop [ch numbers]
+      (when-let [prime (<! ch)]
+        (>! primes prime)
+        (recur (remove< (partial factor? prime) ch)))
+      (close! primes))
+    primes))
+
 
 
 (defn -main [& args]
@@ -58,5 +70,12 @@
 
   ;; (def ch (to-chan (range 0 10)))
   ;; (println (<!! (async/into [] (map< (partial * 2) (filter< even? ch)))))
+
+  ; (def limit 100)
+  ; (let [primes (get-primes limit)]
+  ;   (loop []
+  ;     (when-let [prime (<!! primes)]
+  ;       (println prime)
+  ;       (recur))))
 
   (println "main"))
